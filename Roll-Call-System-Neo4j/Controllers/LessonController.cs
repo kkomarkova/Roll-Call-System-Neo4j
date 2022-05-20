@@ -34,26 +34,26 @@ namespace Roll_Call_System_Neo4j.Controllers
                                 .ExecuteWithoutResultsAsync();
             return Ok();
         }
-        //[HttpPut("{id}")]
-        //public async Task<IActionResult> UpdateSubject(int id, [FromBody] Lesson lesson)
-        //{
-        //    await _client.Cypher.Match("(l:Lesson)")
-        //                        .Where((Lesson l) => l.id == id)
-        //                        .Set("l = $lesson")
-        //                        .WithParam("lesson", lesson)
-        //                        .WithParam("startTime", lesson.startTime)
-        //                        .ExecuteWithoutResultsAsync();
-        //    return Ok();
-        //}
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteLesson(int id)
-        //{
-        //    await _client.Cypher.Match("(l:Lesson)")
-        //                         .Where((Lesson l) => l.id == id)
-        //                         .Delete("l")
-        //                         .ExecuteWithoutResultsAsync();
-        //    return Ok();
+        [HttpPut("{lid}")]
+        public async Task<IActionResult> UpdateSubject(string lid, [FromBody] Lesson lesson)
+        {
+            await _client.Cypher.Match("(l:Lesson)")
+                                .Where((Lesson l) => l.lid == lid)
+                                .Set("l = $lesson")
+                                .WithParam("lesson", lesson)
+                                .WithParam("startTime", lesson.startTime)
+                                .ExecuteWithoutResultsAsync();
+            return Ok();
+        }
+        [HttpDelete("{lid}")]
+        public async Task<IActionResult> DeleteLesson(string lid)
+        {
+            await _client.Cypher.Match("(l:Lesson)")
+                                 .Where((Lesson l) => l.lid == lid)
+                                 .Delete("l")
+                                 .ExecuteWithoutResultsAsync();
+            return Ok();
 
-        //}
+        }
     }
 }
