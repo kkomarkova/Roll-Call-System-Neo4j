@@ -24,6 +24,19 @@ namespace Roll_Call_System_Neo4j.Controllers
 
             return Ok(students);
         }
+        //[HttpGet("StudentswithTrophies")]
+        //public async Task<IActionResult> GetStudentstrophies()
+        //{
+
+        //    var students = await _client.Cypher.Match("(u:User)<-[r:RECEIVES]-(t:Trophy)")
+        //        .Return((u, n, r) => new
+        //        {
+        //            User = u.As<User>(),
+        //            Trophy = n.As<Trophy>()
+        //        }).ResultsAsync;
+
+        //    return Ok(students);
+        //}
 
     }
 }
