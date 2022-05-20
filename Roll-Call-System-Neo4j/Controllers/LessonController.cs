@@ -25,35 +25,35 @@ namespace Roll_Call_System_Neo4j.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateLesson([FromBody] Lesson lesson)
         {
-            await _client.Cypher.Create("(n:Lesson{id: $id,code: $code, codeTime: $codeTime, startTime: $startTime})")
+            await _client.Cypher.Create("(n:Lesson{code: $code, codeTime: $codeTime, startTime: $startTime})")
                                 
                                 .WithParam("code", lesson.code)
                                 .WithParam("codeTime", lesson.codeTime)
                                 .WithParam("startTime", lesson.startTime)
-                                .WithParam("id", lesson.id)
+                                //.WithParam("id", lesson.id)
                                 .ExecuteWithoutResultsAsync();
             return Ok();
         }
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSubject(int id, [FromBody] Lesson lesson)
-        {
-            await _client.Cypher.Match("(l:Lesson)")
-                                .Where((Lesson l) => l.id == id)
-                                .Set("l = $lesson")
-                                .WithParam("lesson", lesson)
-                                .WithParam("startTime", lesson.startTime)
-                                .ExecuteWithoutResultsAsync();
-            return Ok();
-        }
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteLesson(int id)
-        {
-            await _client.Cypher.Match("(l:Lesson)")
-                                 .Where((Lesson l) => l.id == id)
-                                 .Delete("l")
-                                 .ExecuteWithoutResultsAsync();
-            return Ok();
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateSubject(int id, [FromBody] Lesson lesson)
+        //{
+        //    await _client.Cypher.Match("(l:Lesson)")
+        //                        .Where((Lesson l) => l.id == id)
+        //                        .Set("l = $lesson")
+        //                        .WithParam("lesson", lesson)
+        //                        .WithParam("startTime", lesson.startTime)
+        //                        .ExecuteWithoutResultsAsync();
+        //    return Ok();
+        //}
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteLesson(int id)
+        //{
+        //    await _client.Cypher.Match("(l:Lesson)")
+        //                         .Where((Lesson l) => l.id == id)
+        //                         .Delete("l")
+        //                         .ExecuteWithoutResultsAsync();
+        //    return Ok();
 
-        }
+        //}
     }
 }

@@ -2,9 +2,8 @@
 {
     public class Lesson
     {
-        public int id { get; set; }
-        public int code { get; set; }
-        public DateTime codeTime { get; set; }
-        public DateTime startTime { get; set; }
+        public string code{ get; set; }
+        public string codeTime { get; set; }
+        public string startTime { get; set; }
     }
 }
