@@ -23,6 +23,15 @@ namespace Roll_Call_System_Neo4j.Controllers
                             .Return(n => n.As<User>()).ResultsAsync;
             return Ok(users);
         }
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetbyEmail(string email)
+        {
+            var users = await _client.Cypher.Match("(n: User)")
+                            .Where((User n) => n.email == email)
+                            .Return(n => n.As<User>()).ResultsAsync;
+            return Ok(users);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {

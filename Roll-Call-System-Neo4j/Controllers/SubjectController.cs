@@ -21,6 +21,14 @@ namespace Roll_Call_System_Neo4j.Controllers
                             .Return(n => n.As<Subject>()).ResultsAsync;
             return Ok(subjects);
         }
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetbyName(string name)
+        {
+            var trophies = await _client.Cypher.Match("(s:Subject)")
+                            .Where((Subject s) => s.name == name)
+                            .Return(s => s.As<Subject>()).ResultsAsync;
+            return Ok(trophies);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateSubject([FromBody] Subject subject)
         {

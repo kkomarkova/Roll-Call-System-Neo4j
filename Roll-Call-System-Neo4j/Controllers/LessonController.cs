@@ -22,6 +22,14 @@ namespace Roll_Call_System_Neo4j.Controllers
                             .Return(n => n.As<Lesson>()).ResultsAsync;
             return Ok(lessons);
         }
+        [HttpGet("{lid}")]
+        public async Task<IActionResult> GetbyName(string lid)
+        {
+            var lessons = await _client.Cypher.Match("(l:Lesson)")
+                            .Where((Lesson l) => l.lid == lid)
+                            .Return(l => l.As<Lesson>()).ResultsAsync;
+            return Ok(lessons);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateLesson([FromBody] Lesson lesson)
         {

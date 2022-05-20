@@ -21,6 +21,14 @@ namespace Roll_Call_System_Neo4j.Controllers
                             .Return(n => n.As<Campus>()).ResultsAsync;
             return Ok(trophies);
         }
+        [HttpGet("{ssid}")]
+        public async Task<IActionResult> GetbyName(string ssid)
+        {
+            var campuses = await _client.Cypher.Match("(l:Lesson)")
+                            .Where((Campus c) => c.ssid == ssid)
+                            .Return(n => n.As<Campus>()).ResultsAsync;
+            return Ok(campuses);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateCampus([FromBody] Campus campus)
         {

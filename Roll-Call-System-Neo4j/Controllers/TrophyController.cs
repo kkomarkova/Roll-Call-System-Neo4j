@@ -22,6 +22,14 @@ namespace Roll_Call_System_Neo4j.Controllers
                             .Return(n => n.As<Trophy>()).ResultsAsync;
             return Ok(users);
         }
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetbyName(string name)
+        {
+            var trophies = await _client.Cypher.Match("(t:Trophy)")
+                            .Where((Trophy t) => t.name == name)
+                            .Return(t => t.As<Trophy>()).ResultsAsync;
+            return Ok(trophies);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateTrophy([FromBody] Trophy trophy)
         {

@@ -18,9 +18,17 @@ namespace Roll_Call_System_Neo4j.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var trophies = await _client.Cypher.Match("(n: Role)")
+            var roles = await _client.Cypher.Match("(n: Role)")
                             .Return(n => n.As<Role>()).ResultsAsync;
-            return Ok(trophies);
+            return Ok(roles);
+        }
+        [HttpGet("{name}")]
+        public async Task<IActionResult> GetbyName(string name)
+        {
+            var roles = await _client.Cypher.Match("(r:Role)")
+                            .Where((Role r) => r.name == name)
+                            .Return(r => r.As<Role>()).ResultsAsync;
+            return Ok(roles);
         }
         [HttpPost]
         public async Task<IActionResult> CreateRole([FromBody] Role role)
