@@ -30,6 +30,14 @@ namespace Roll_Call_System_Neo4j.Controllers
                             .Return(r => r.As<Role>()).ResultsAsync;
             return Ok(roles);
         }
+        [HttpGet("/GetRole/{email}")]
+        public async Task<IActionResult> GetRoleByUser(string email)
+        {
+            var roles = await _client.Cypher.Match("(user:User)-[HAS_ROLE]-(role:Role)")
+                            .Where((User user) => user.email == email)
+                            .Return(role => role.As<Role>()).ResultsAsync;
+            return Ok(roles);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateRole([FromBody] Role role)
         {
