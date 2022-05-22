@@ -61,12 +61,12 @@ public class JWTTokenController : ControllerBase
 
                 try
                 {
-                    ////Get the first role from my role list which I got above, that matches the roleId of the user that has logged in
-                    //claims.Add(new Claim(ClaimTypes.Role, roles.FirstOrDefault(x => x == userData.Role)));
+                    var userRoles = await _client.Cypher.Match("(user:User)-[HAS_ROLE]-(role:Role)")
+                            .Where((User user) => user.email == userData.email)
+                            .Return(role => role.As<Role>()).ResultsAsync;
 
-                    ////For ease of access (I don't know how to access the named ones set above lol), I store the user Id in the name type since we're not using that one
-                    ////If anyone figures out how to access the Claim("Id") later, please let me know <3 <3
-                    //claims.Add(new Claim(ClaimTypes.Name, userData.Id.ToString()));
+                    ////Get the first role from my role list which I got above, that matches the roleId of the user that has logged in
+                    claims.Add(new Claim(ClaimTypes.Role, roles.FirstOrDefault(x => x == userRoles.FirstOrDefault().name)));
                 }
                 catch
                 {
