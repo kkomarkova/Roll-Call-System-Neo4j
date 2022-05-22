@@ -35,11 +35,12 @@ namespace Roll_Call_System_Neo4j.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
-            await _client.Cypher.Create("(n:User{email: $email, firstName: $firstName, lastName: $lastName, password: $password})")
+            await _client.Cypher.Create("(n:User{email: $email, firstName: $firstName, lastName: $lastName, password: $password, salt: $salt})")
                                 .WithParam("email", user.email)
                                 .WithParam("firstName", user.firstName)
                                 .WithParam("lastName", user.lastName)
                                 .WithParam("password", user.password)
+                                .WithParam("salt", user.salt)
                                 .ExecuteWithoutResultsAsync();
             return Ok();
         }
@@ -64,6 +65,7 @@ namespace Roll_Call_System_Neo4j.Controllers
                                 .WithParam("firstName", user.firstName)
                                 .WithParam("lastName", user.lastName)
                                 .WithParam("password", user.password)
+                                .WithParam("salt", user.salt)
                                 .ExecuteWithoutResultsAsync();
             return Ok();
         }
